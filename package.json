@@ -1,5 +1,5 @@
 {
-  "name": "picross-solver",
+  "name": "griddlerzen",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,8 @@
     "format": "oxfmt src",
     "format:check": "oxfmt --check src",
     "typecheck": "tsgo -b",
-    "test": "vitest"
+    "test": "vitest",
+    "generate:puzzles": "node --experimental-strip-types scripts/generate-puzzles.ts"
   },
   "dependencies": {
     "solid-js": "1.9.12"
