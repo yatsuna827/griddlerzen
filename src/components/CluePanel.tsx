@@ -16,7 +16,7 @@ export function CluePanel(props: CluePanelProps): JSX.Element {
         {(clue, i) => (
           <div class={`clue-line${props.highlightIndex === i() ? ' clue-line--highlight' : ''}`}>
             {clue.length === 0 ? (
-              <span class="clue-num clue-num--zero">0</span>
+              <span class={`clue-num${props.confirmedClues[i()]?.[0] ? ' clue-num--done' : ''}`}>0</span>
             ) : (
               <For each={clue}>
                 {(num, j) => (

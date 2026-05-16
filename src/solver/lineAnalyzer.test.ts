@@ -296,9 +296,14 @@ describe('getConfirmedClueIndices', () => {
     expect(getConfirmedClueIndices([5], line)).toEqual([true]);
   });
 
-  test('クルー []: 空ヒント → 空配列', () => {
+  test('クルー []: 全セルが0確定 → [true]', () => {
     const line: CellValue[] = [0, 0, 0];
-    expect(getConfirmedClueIndices([], line)).toEqual([]);
+    expect(getConfirmedClueIndices([], line)).toEqual([true]);
+  });
+
+  test('クルー []: 未確定セルあり → [false]', () => {
+    const line: CellValue[] = [null, null, null];
+    expect(getConfirmedClueIndices([], line)).toEqual([false]);
   });
 
   test('矛盾ライン → 全て false', () => {

@@ -126,11 +126,6 @@
   line-height: 1;
 }
 
-.clue-num--zero {
-  color: var(--text);
-  font-weight: 400;
-}
-
 .clue-num--done {
   color: #e03030;
   transition: color 0.2s ease;

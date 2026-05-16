@@ -194,7 +194,7 @@ export function isLineContradicted(clues: number[], line: CellValue[]): boolean 
  *   3. 左端が境界（index=0）または 0 確定セル、右端が境界または 0 確定セル
  */
 export function getConfirmedClueIndices(clues: number[], line: CellValue[]): boolean[] {
-  if (clues.length === 0) return [];
+  if (clues.length === 0) return [line.every((cell) => cell === 0)];
 
   const left = leftmostPlacement(clues, line);
   const right = rightmostPlacement(clues, line);
