@@ -44,6 +44,8 @@ const App = () => {
   const [currentStepIndex, setCurrentStepIndex] = createSignal(0);
   const [speed, setSpeed] = createSignal(200);
   const [isCompleted, setIsCompleted] = createSignal(false);
+  const [vpWidth, setVpWidth] = createSignal(window.innerWidth);
+  const [vpHeight, setVpHeight] = createSignal(window.innerHeight);
 
   // グリッドを currentStepIndex から計算
   const displayGrid = createMemo<CellValue[][]>(() => buildGridFromSteps(puzzle(), steps(), currentStepIndex()));
@@ -91,13 +93,28 @@ const App = () => {
   // 行ヒントの最大クルー数（行ヒントエリアの幅固定に使用）
   const maxRowClues = createMemo(() => Math.max(1, ...puzzle().rowClues.map((c) => c.length)));
 
-  // セルサイズ（グリッドサイズに応じて動的計算）
+  // セルサイズ（グリッドサイズ・ビューポートに応じて動的計算）
   const cellSize = createMemo(() => {
     const size = puzzle().size;
-    if (size <= 5) return 48;
-    if (size <= 10) return 36;
-    if (size <= 15) return 28;
-    return 22;
+
+    // デスクトップ基準のセルサイズ
+    let base: number;
+    if (size <= 5) base = 48;
+    else if (size <= 10) base = 36;
+    else if (size <= 15) base = 28;
+    else base = 22;
+
+    // 幅制約: .main の水平 padding(16px*2) を引いた利用可能幅
+    // rowClueWidth + size*cellSize + (size-1)*1px(gap) + 4px(border) <= availableWidth
+    const rowClueWidth = Math.max(40, maxRowClues() * 17 + 8);
+    const maxByWidth = Math.floor((vpWidth() - 32 - rowClueWidth - (size - 1) - 4) / size);
+
+    // 高さ制約: padding(48) + gap(16) + speed control(~36px) + buffer(10px)
+    // colClueHeight + size*cellSize + (size-1)*1px + 4px(border) <= availableHeight
+    const colClueHeight = Math.max(40, maxColClues() * 16 + 6);
+    const maxByHeight = Math.floor((vpHeight() - 110 - colClueHeight - (size - 1) - 4) / size);
+
+    return Math.max(14, Math.min(base, maxByWidth, maxByHeight));
   });
 
   // パズルをロードして再生開始
@@ -145,8 +162,16 @@ const App = () => {
     onCleanup(() => clearTimeout(id));
   });
 
-  // 初回ロード
-  onMount(() => loadPuzzle(ALL_PUZZLES[puzzleIndex]));
+  // 初回ロード・リサイズ監視
+  onMount(() => {
+    const handleResize = () => {
+      setVpWidth(window.innerWidth);
+      setVpHeight(window.innerHeight);
+    };
+    window.addEventListener('resize', handleResize);
+    onCleanup(() => window.removeEventListener('resize', handleResize));
+    loadPuzzle(ALL_PUZZLES[puzzleIndex]);
+  });
 
   return (
     <div class="app">
