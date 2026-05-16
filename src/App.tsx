@@ -152,7 +152,14 @@ const App = () => {
     <div class="app">
       <main class="main">
         {/* 2×2グリッド: [コーナー][列ヒント] / [行ヒント][グリッド] */}
-        <div class="puzzle-container" style={{ '--max-col-clues': maxColClues(), '--max-row-clues': maxRowClues() }}>
+        <div
+          class="puzzle-container"
+          style={{
+            '--max-col-clues': maxColClues(),
+            '--max-row-clues': maxRowClues(),
+            '--cell-size': `${cellSize()}px`,
+          }}
+        >
           <div />
           {/* 左上コーナー（空白） */}
           <CluePanel
@@ -173,11 +180,21 @@ const App = () => {
             grid={displayGrid()}
             size={puzzle().size}
             cellSize={cellSize()}
-            highlightRow={highlightRow()}
-            highlightCol={highlightCol()}
             lastStep={currentStep()}
             isCompleted={isCompleted()}
           />
+          {!isCompleted() && highlightRow() !== null && (
+            <div
+              class="highlight-overlay highlight-overlay--row"
+              style={{ '--idx': `${highlightRow() ?? 0}` } as Record<string, string>}
+            />
+          )}
+          {!isCompleted() && highlightCol() !== null && (
+            <div
+              class="highlight-overlay highlight-overlay--col"
+              style={{ '--idx': `${highlightCol() ?? 0}` } as Record<string, string>}
+            />
+          )}
         </div>
 
         <div class="speed-control">

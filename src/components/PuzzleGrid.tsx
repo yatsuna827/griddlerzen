@@ -6,8 +6,6 @@ type PuzzleGridProps = {
   grid: CellValue[][];
   size: number;
   cellSize: number;
-  highlightRow: number | null;
-  highlightCol: number | null;
   lastStep: Step | null;
   isCompleted: boolean;
 };
@@ -29,9 +27,6 @@ export function PuzzleGrid(props: PuzzleGridProps): JSX.Element {
     } else if (value === 0) {
       classes.push('cell--empty');
     }
-
-    if (props.highlightRow === r) classes.push('cell--highlight-row');
-    if (props.highlightCol === c) classes.push('cell--highlight-col');
 
     if (props.isCompleted) classes.push('cell--wave');
 

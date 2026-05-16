@@ -23,6 +23,7 @@
 
 /* 2×2グリッド: [コーナー][列ヒント] / [行ヒント][グリッド] */
 .puzzle-container {
+  position: relative;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
@@ -115,7 +116,7 @@
 }
 
 .clue-line--highlight {
-  background: var(--clue-highlight);
+  background: var(--accent-bg);
 }
 
 .clue-num {
@@ -148,6 +149,39 @@
   gap: 1px;
 }
 
+.highlight-overlay {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid var(--highlight-border);
+  z-index: 1;
+}
+
+/* 行オーバーレイ: ヒントパネル左端〜グリッド右端を横断 */
+.highlight-overlay--row {
+  left: 0;
+  right: 0;
+  height: var(--cell-size);
+  /* col クルー高 + グリッド上ボーダー + 行インデックス分オフセット */
+  top: calc(
+    max(40px, var(--max-col-clues, 1) * 16px + 6px)
+    + 2px
+    + var(--idx) * (var(--cell-size) + 1px)
+  );
+}
+
+/* 列オーバーレイ: ヒントパネル上端〜グリッド下端を縦断 */
+.highlight-overlay--col {
+  top: 0;
+  bottom: 0;
+  width: var(--cell-size);
+  /* row クルー幅 + グリッド左ボーダー + 列インデックス分オフセット */
+  left: calc(
+    max(40px, var(--max-row-clues, 1) * 17px + 8px)
+    + 2px
+    + var(--idx) * (var(--cell-size) + 1px)
+  );
+}
+
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
@@ -167,18 +201,6 @@
   background: var(--cell-backtrack);
 }
 
-.cell--highlight-row {
-  background-color: var(--cell-highlight-row);
-}
-
-.cell--highlight-col {
-  background-color: var(--cell-highlight-col);
-}
-
-.cell--filled.cell--highlight-row,
-.cell--filled.cell--highlight-col {
-  background: var(--cell-filled);
-}
 
 /* セル確定アニメーション */
 @keyframes flash {

@@ -13,10 +13,9 @@
   --cell-bg: #f8f8f8;
   --cell-border: #ccc;
   --cell-filled: #2d2d2d;
+  --highlight-border: #4a78b0;
   --cell-empty-confirmed: #e0e0e0;
   --cell-backtrack: var(--accent);
-  --cell-highlight-row: rgba(170, 59, 255, 0.06);
-  --cell-highlight-col: rgba(170, 59, 255, 0.06);
   --clue-bg: #f4f3f8;
   --clue-highlight: rgba(170, 59, 255, 0.15);
 
@@ -42,11 +41,10 @@
     --cell-bg: #1e1f26;
     --cell-border: #3a3b44;
     --cell-filled: #e8e8e8;
+    --highlight-border: #6699cc;
     --cell-empty-confirmed: #2e2f38;
     --clue-bg: #1a1b22;
     --clue-highlight: rgba(192, 132, 252, 0.15);
-    --cell-highlight-row: rgba(192, 132, 252, 0.05);
-    --cell-highlight-col: rgba(192, 132, 252, 0.05);
   }
 }
 
