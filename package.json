@@ -1,0 +1,29 @@
+{
+  "name": "picross-solver",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsgo -b && vite build",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt src",
+    "format:check": "oxfmt --check src",
+    "typecheck": "tsgo -b",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "solid-js": "1.9.12"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.3",
+    "@typescript/native-preview": "7.0.0-dev.20260516.1",
+    "oxfmt": "0.50.0",
+    "oxlint": "1.65.0",
+    "vite": "8.0.13",
+    "vite-plugin-solid": "2.11.12",
+    "vitest": "4.1.6"
+  }
+}
